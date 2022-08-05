@@ -33,4 +33,8 @@ class AuthController extends Controller
         return Response::withoutData(false, 'Email or password is incorrect');
     }
 
+    public function logged_user(){
+        $loggeduser = auth()->user();
+        return Response::withData(true, 'Logged User Data', $loggeduser);
+    }
 }
