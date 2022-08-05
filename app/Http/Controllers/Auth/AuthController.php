@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Http\Controllers\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -18,17 +19,19 @@ class AuthController extends Controller
             'email'=>$request->email,
             'password'=>Hash::make($request->password)
         ]);
-        // $token = $user->createToken($request->email)->plainTextToken;
-
-        return Response::withoutData(true, 'Registration Success');
+        $token = $user->createToken($request->email)->plainTextToken;
+        event(new Registered($user)); 
+        return Response::withData(true, 'Registration Success', $token);
     }
 
     public function login(LoginRequest $request){
         $user = User::where('email', $request->email)->first();
         if($user && Hash::check($request->password, $user->password)){
-            $token = $user->createToken($request->email)->plainTextToken;
-            
-            return Response::withData(true, 'Login Success', $token);
+            if($user->email_verified_at){
+                $token = $user->createToken($request->email)->plainTextToken;
+                return Response::withData(true, 'Login Success', $token);
+            }
+            return Response::withoutData(false, 'Verify e-mail address');
         }
         return Response::withoutData(false, 'Email or password is incorrect');
     }

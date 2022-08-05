@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\AuthController;
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +21,5 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/loggeduser', [AuthController::class, 'logged_user']);
+    Route::post('/email/verification-notification', [VerifyEmailController::class, 'resendNotification'])->name('verification.send');
 }); 
