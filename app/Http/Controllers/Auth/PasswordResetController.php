@@ -21,11 +21,8 @@ class PasswordResetController extends Controller
         ]);
         $email = $request->email;
 
-
         // Check User's Email Exists or Not
         $user = User::where('email', $email)->first();
-
-        
         if(!$user){
             return response([
                 'message'=>'Email doesnt exists',
@@ -35,8 +32,6 @@ class PasswordResetController extends Controller
 
         // Generate Token
         $token = Str::random(60);
-        
-        
         // Saving Data to Password Reset Table
         PasswordReset::create([
             'email'=>$email,

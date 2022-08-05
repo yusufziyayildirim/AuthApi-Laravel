@@ -21,7 +21,7 @@ class AuthController extends Controller
         ]);
         $token = $user->createToken($request->email)->plainTextToken;
         event(new Registered($user)); 
-        return Response::withData(true, 'Registration Success', $token);
+        return Response::withData(true, 'Registration Success.. Check your email for verification', $token);
     }
 
     public function login(LoginRequest $request){
@@ -44,6 +44,5 @@ class AuthController extends Controller
     public function logout(){
         auth()->user()->tokens()->delete();
         return Response::withData(true, 'Logout Success', auth()->user());
-
     }
 }

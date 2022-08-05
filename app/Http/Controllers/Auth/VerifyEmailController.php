@@ -20,12 +20,11 @@ class VerifyEmailController extends Controller
             $user->markEmailAsVerified();
             event(new Verified($user));
         }
- 
         return view('verified-account');
     }
  
     public function resendNotification(Request $request) {
         $request->user()->sendEmailVerificationNotification();
-        return Response::withoutData(true, 'verification link sent');
+        return Response::withoutData(true, 'Verification link sent');
     }
 }

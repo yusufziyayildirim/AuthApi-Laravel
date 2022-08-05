@@ -20,8 +20,9 @@ Route::get('/', function () {
 });
 
  
+//Email verification
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
 
-//Reset Passpwrd
+//Reset Password
 Route::get('user/reset/{token}', [PasswordResetController::class, 'reset_form']);
 Route::post('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('reset.password');
