@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\PasswordResetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,7 @@ Route::get('/', function () {
 
  
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
+
+//Reset Passpwrd
+Route::get('user/reset/{token}', [PasswordResetController::class, 'reset_form']);
+Route::post('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('reset.password');
