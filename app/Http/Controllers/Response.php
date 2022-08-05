@@ -22,8 +22,7 @@ class Response
     {
         return response()->json([
             'status' => $status,
-            'message' => $message,
-            'data' => []
+            'message' => $message
         ]);
     }
 }
