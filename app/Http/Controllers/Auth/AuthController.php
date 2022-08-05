@@ -40,4 +40,10 @@ class AuthController extends Controller
         $loggeduser = auth()->user();
         return Response::withData(true, 'Logged User Data', $loggeduser);
     }
+
+    public function logout(){
+        auth()->user()->tokens()->delete();
+        return Response::withData(true, 'Logout Success', auth()->user());
+
+    }
 }
